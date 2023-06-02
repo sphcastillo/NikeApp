@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, Pressable } from 'react-native';
 import products from '../data/products';
 
 const ProductsScreen = () => {
@@ -6,8 +6,9 @@ const ProductsScreen = () => {
         <FlatList 
             data={products}
             renderItem={({ item }) => (
-            <View
-            style={styles.imageContainer}
+            <Pressable
+              onPress={() => console.warn("Pressed: " + item.name)}
+              style={styles.imageContainer}
             >
                 <Image 
                 source={{
@@ -15,7 +16,7 @@ const ProductsScreen = () => {
                 }}
                 style={styles.image}
                 />
-            </View>
+            </Pressable>
             )}
             numColumns={2}
       />
