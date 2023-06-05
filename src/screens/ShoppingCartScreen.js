@@ -24,7 +24,8 @@ const ShoppingCartScreen =  ()  => {
         <>
             <FlatList 
                 data={cart} 
-                renderItem={({ item }) => <CartListItem cartItem={item} />}
+                renderItem={({ item }) => <CartListItem 
+                cartItem={item} />}
                 ListFooterComponent={ShoppingCartTotals}
             />
             <Pressable style={styles.button}>
