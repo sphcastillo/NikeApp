@@ -1,8 +1,8 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import ProductsScreen from "./src/screens/ProductsScreen";
-import ProductDetailsScreen from "./src/screens/ProductDetailsScreen";
-import ShoppingCartScreen from "./src/screens/ShoppingCartScreen";
+import ProductsScreen from "./screens/ProductsScreen";
+import ProductDetailsScreen from "./screens/ProductDetailsScreen";
+import ShoppingCartScreen from "./screens/ShoppingCartScreen";
 import { Pressable, Text } from "react-native";
 import { FontAwesome5 } from '@expo/vector-icons';
 

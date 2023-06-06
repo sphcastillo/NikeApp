@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import products from "../data/products";
 
 // define the initial state
 const initialState = {
-    products: [],
+    products: products,
+    selectedProduct: null,
 };
 
 // export the slice - we need:
@@ -12,5 +14,10 @@ const initialState = {
 export const productsSlice = createSlice({
     name: 'products',
     initialState,
-    reducers: {},
+    reducers: {
+        setSelectedProduct: (state, action) => {
+            console.log("state: ", state);
+            console.log("action: ", action);
+        }
+    },
 })
