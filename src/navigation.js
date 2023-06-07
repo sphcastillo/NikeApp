@@ -7,10 +7,12 @@ import { Pressable, Text } from "react-native";
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useSelector } from "react-redux";
 import { selectNumberOfItems } from "./store/cartSlice";
+import TrackOrder from "./screens/TrackOrderScreen";
 
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
+
     const numberOfItems = useSelector(selectNumberOfItems);
 
     return (
@@ -39,6 +41,7 @@ const Navigation = () => {
                     options={{ presentation: 'modal' }}
                 />
                 <Stack.Screen name="Cart" component={ShoppingCartScreen}/>
+                <Stack.Screen name="Track Order" component={TrackOrder}/>
             </Stack.Navigator>
         </NavigationContainer>
     )
