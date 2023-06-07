@@ -46,4 +46,20 @@ export const selectSubtotal = (state) =>
     state.cart.items.reduce(
         (sum, cartItem) => sum + cartItem.product.price * cartItem.quantity,
         0
-    );
+);
+
+// this will get us all the cart details
+const cartSelector = (state) => state.cart;
+
+export const selectDeliveryPrice = createSelector(
+    cartSelector,
+    selectSubtotal,
+    (cart, subtotal) => (subtotal > cart.freeDeliveryFrom ? 0 : cart.deliveryFee)
+);
+
+export const selectTotal = createSelector(
+    selectSubtotal,
+    selectDeliveryPrice,
+    // function that will generate the value
+    (subtotal, delivery) => subtotal + delivery
+);

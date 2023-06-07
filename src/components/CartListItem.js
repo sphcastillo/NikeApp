@@ -46,7 +46,9 @@ const CartListItem = ({ cartItem }) => {
             size={24}
             color="gray"
           />
-          <Text style={styles.itemTotal}>${cartItem.product.price * cartItem.quantity}</Text>
+          <Text style={styles.itemTotal}>
+            ${cartItem.product.price * cartItem.quantity}
+          </Text>
         </View>
       </View>
     </View>
