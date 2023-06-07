@@ -1,10 +1,13 @@
 import { StyleSheet, View, Text, Image, Pressable, FlatList, useWindowDimensions, ScrollView } from 'react-native'
 import React from 'react'
 import products from "../data/products";
+import { useSelector } from 'react-redux';
 
 const ProductDetailsScreen = () => {
     // takes first product from our data
-    const product = products[0];
+    // const product = products[0];
+
+    const product = useSelector((state) => state.products.selectedProduct);
 
     const { width } = useWindowDimensions();
 
