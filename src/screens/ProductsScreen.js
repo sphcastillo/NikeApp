@@ -15,21 +15,24 @@ const ProductsScreen = () => {
 
     const navigation = useNavigation();
 
-    const products = useSelector((state) => state.products.products);
+    // dummy data
+    // const products = useSelector((state) => state.products.products);
     
     const dispatch = useDispatch();
 
-    // const { data, isLoading, error } = useGetProductsQuery();
+    const { data, isLoading, error } = useGetProductsQuery();
 
-    // if(isLoading){
-    //   return <ActivityIndicator />
-    // }
+    if(isLoading){
+      return <ActivityIndicator />
+    }
 
-    // if(error){
-    //   return  <Text>PRODUCTSCREEN/ Error fetching products: {error.error}</Text>
-    // }
+    if(error){
+      return  <Text>PRODUCTSCREEN/ Error fetching products: {error.error}</Text>
+    }
+    
+    console.log("data", data);
 
-    // const products = data?.data; 
+    const products = data?.data; 
 
 
     return (
