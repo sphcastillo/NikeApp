@@ -59,7 +59,9 @@ const ShoppingCartScreen =  ()  => {
             Alert.alert(
                 "Order has been submitted",
                 `Your order reference is ${result.data.data.ref}`
-            )
+            );
+            // empty shopping cart
+            dispatch(cartSlice.actions.clear());
         }
     }
     return (

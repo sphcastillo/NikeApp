@@ -34,9 +34,12 @@ export const cartSlice = createSlice({
             }
             // when the quantity goes below 0 => remove item from cart
             if(cartItem.quantity <= 0){
-                state.items = state.items.filter((item) => item != cartItem)
+                state.items = state.items.filter((item) => item != cartItem);
             }
         },
+        clear: (state) => {
+            state.items =  [];
+        }
     }
 });
 
