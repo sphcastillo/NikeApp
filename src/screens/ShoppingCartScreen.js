@@ -41,8 +41,8 @@ const ShoppingCartScreen =  ()  => {
 
     const [createOrder, { data, error, isLoading }] = useCreateOrderMutation();
 
-    const onCreateOrder = () => {
-        createOrder({
+    const onCreateOrder = async () => {
+        const result =  await createOrder({
             // all the items from the cart - we want to add to order
             items: cartItems,
             subtotal,
@@ -54,6 +54,13 @@ const ShoppingCartScreen =  ()  => {
                 email: "sphcastillo@gmail.com"
             }
         })
+
+        if(result.data?.status === "OK"){
+            Alert.alert(
+                "Order has been submitted",
+                `Your order reference is ${result.data.data.ref}`
+            )
+        }
     }
     return (
         <>
