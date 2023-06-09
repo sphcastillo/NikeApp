@@ -14,7 +14,7 @@ export const cartSlice = createSlice({
             const newProduct = action.payload.product;
             // search if we already have item
             const cartItem = state.items.find(
-                (item) => item.product.id === newProduct.id
+                (item) => item.product._id === newProduct._id
             );
             if(cartItem){
                 // if exists, add to it
@@ -27,7 +27,7 @@ export const cartSlice = createSlice({
         changeQuantity: (state, action) => {
             const { productId, amount } = action.payload;
             const cartItem = state.items.find(
-                (item) => item.product.id === productId
+                (item) => item.product._id === productId
             );
             if(cartItem){
                 cartItem.quantity += amount;

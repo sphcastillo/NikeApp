@@ -2,7 +2,7 @@ import { Text, FlatList, View, StyleSheet, Pressable, Alert, ActivityIndicator }
 import { useSelector, useDispatch } from 'react-redux';
 import CartListItem from '../components/CartListItem';
 import { selectDeliveryPrice, selectSubtotal, selectTotal, cartSlice } from '../store/cartSlice';
-import { useCreateOrderMutation, useCreatePaymentIntentMutation } from '../store/apiSlice';
+import { useCreateOrderMutation } from '../store/apiSlice';
 import { useStripe } from '@stripe/stripe-react-native';
 // import cart from "../data/cart";
 
@@ -39,68 +39,22 @@ const ShoppingCartScreen =  ()  => {
 
     // console.log(error, isLoading);
 
-    // const [createOrder, { data, error, isLoading }] = useCreateOrderMutation();
-    // const [createPaymentIntent] = useCreatePaymentIntentMutation();
-    // const { initPaymentSheet, presentPaymentSheet } = useStripe();
+    const [createOrder, { data, error, isLoading }] = useCreateOrderMutation();
 
-    // const onCheckout = async() => {
-    //     // 1. Create a payment intent
-    //     const response = await createPaymentIntent({
-    //         amount: Math.floor(total * 100),
-    //     });
-    //     if(response.error){
-    //         Alert.alert('Something went wrong at CREATE PAYMENT INTENT');
-    //         return;
-    //     }
-
-    //     // 2. Initialize the Payment sheet
-    //     const initResponse = await initPaymentSheet({
-    //         merchantDisplayName: "sphcastillo",
-    //         paymentIntentClientSecret: response.data.paymentIntent,
-    //     });
-    //     if(initResponse.error){
-    //         console.log(initResponse.error);
-    //         Alert.alert("Something went wrong at INIT PAYMENT SHEET");
-    //         return;
-    //     }
-
-    //     // 3. Present the Payment Sheet from Stripe
-    //     const paymentResponse = await presentPaymentSheet();
-    //     if(paymentResponse.error){
-    //         Alert.alert(`Error code: ${paymentResponse.error.code}`,
-    //         paymentResponse.error.message
-    //         );
-    //         return;
-    //     }
-
-    //     // 4. If payment okay, create the order
-    //     onCreateOrder();
-
-    // }
-
-    // const onCreateOrder = async() => {
-    //     const result = await createOrder({
-    //         items: cartItems,
-    //         subtotal,
-    //         deliveryFee,
-    //         total,
-    //         customer: {
-    //             name: "Sophia Castillo",
-    //             address: "Playa Del Rey, California",
-    //             email: "sphcastillo@gmail.com"
-    //         }
-    //     })
-
-    //     if(result.data?.status === 'OK'){
-    //         Alert.alert(
-    //             "Order has been submitted",
-    //             `Your order reference is: ${result.data.data.ref}`
-    //         );
-    //         dispatch(cartSlice.actions.clear());
-    //     }
-    // }
-
-
+    const onCreateOrder = () => {
+        createOrder({
+            // all the items from the cart - we want to add to order
+            items: cartItems,
+            subtotal,
+            deliveryFee,
+            total,
+            customer: {
+                name: "Sophia Castillo",
+                address: "Playa Del Rey, California",
+                email: "sphcastillo@gmail.com"
+            }
+        })
+    }
     return (
         <>
             <FlatList 
@@ -110,12 +64,12 @@ const ShoppingCartScreen =  ()  => {
                 ListFooterComponent={ShoppingCartTotals}
             />
             <Pressable 
-                // onPress={onCheckout} 
+                onPress={onCreateOrder} 
                 style={styles.button}
             >
                 <Text style={styles.buttonText}>
                     Checkout
-                    {/* {isLoading && <ActivityIndicator />} */}
+                    {isLoading && <ActivityIndicator />}
                 </Text>
             </Pressable>
         </>

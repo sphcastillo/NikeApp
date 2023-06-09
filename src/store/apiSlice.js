@@ -1,4 +1,3 @@
-// - /query/react allows you to generate hooks
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const baseUrl = 'http://localhost:3000/';
@@ -17,9 +16,26 @@ export const apiSlice = createApi({
       // attaches /products/... 
       query: (id) => `products/${id}`,
     }),
+    //mutation is for POST request - to update some data
+    createOrder: builder.mutation({
+      // newOrder - receiving as a parameter from our shoppingCart component
+      query: (newOrder) => ({
+        url: 'orders',
+        method: "POST",
+        body: newOrder,
+      })
+    }),
+    getOrder: builder.query({
+      query: (ref)  => `orders/${ref}`,
+    })
   }),
 });
 
 // Export hooks for usuage in functional components, which are
 // auto-generared nased on the defined endpoints
-export const { useGetProductQuery, useGetProductsQuery } = apiSlice;
+export const { 
+  useGetProductQuery, 
+  useGetProductsQuery,
+  useCreateOrderMutation,
+  useGetOrderQuery
+} = apiSlice;
