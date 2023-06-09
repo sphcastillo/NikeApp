@@ -5,17 +5,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import  { cartSlice } from "../store/cartSlice";
 import { useGetProductQuery } from '../store/apiSlice';
 
-const ProductDetailsScreen = () => {
+const ProductDetailsScreen = ({route}) => {
 
-    // const id = route.params.id;
+    const id = route.params.id;
     // console.log("id: ", id);
-    // takes first product from our data
-    // const product = products[0];
 
-    // const id = route.params.id; 
-    // const { data, isLoading, error } = useGetProductQuery(id);
+    // id is sent by hook
+    const { data, isLoading, error } = useGetProductQuery(id);
 
-    const product = useSelector((state) => state.products.selectedProduct);
+    // const product = useSelector((state) => state.products.selectedProduct);
 
     const dispatch = useDispatch();
 
@@ -26,15 +24,16 @@ const ProductDetailsScreen = () => {
         dispatch(cartSlice.actions.addCartItem({ product }))
     }
 
-    // if(isLoading){
-    //     return <ActivityIndicator />;
-    // }
+    if(isLoading){
+        return <ActivityIndicator />;
+    }
 
-    // if(error){
-    //     return <Text>Error fetching the product. {error.error}</Text>;
-    // }
+    if(error){
+        return <Text>Error fetching the product. {error.error}</Text>;
+    }
 
-    // const product = data?.data;
+    const product = data?.data;
+
 
     return (
         <View>

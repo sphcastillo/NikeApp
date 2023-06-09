@@ -27,11 +27,14 @@ const ProductsScreen = () => {
     }
 
     if(error){
-      return  <Text>PRODUCTSCREEN/ Error fetching products: {error.error}</Text>
+      return  <Text>
+        Error fetching products: {error.error}
+        </Text>
     }
     
-    console.log("data", data);
+    // console.log("data", data);
 
+    // take products from query data
     const products = data?.data; 
 
 
@@ -43,8 +46,8 @@ const ProductsScreen = () => {
               onPress={() => {
                 //update selected product
                 // need to see payload - the id of the item 
-                dispatch(productsSlice.actions.setSelectedProduct(item.id))
-                navigation.navigate('Product Details');
+                // dispatch(productsSlice.actions.setSelectedProduct(item.id))
+                navigation.navigate('Product Details', {id: item._id});
               }}
               style={styles.imageContainer}
             >
