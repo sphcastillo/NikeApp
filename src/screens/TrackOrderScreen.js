@@ -3,17 +3,16 @@ import { useGetOrderQuery } from "../store/apiSlice";
 import { useState } from 'react';
 
 const TrackOrder = () => {
-
-    const [ref, setRef] = useState("");
+    const [ref, setRef] = useState('');
     const { data, isLoading, error } = useGetOrderQuery(ref);
-
     return (
         <View style={styles.root}>
             <TextInput 
                 style={styles.input}
-                value={ref}
-                onChange={setRef}
                 placeholder="Your order reference"
+                value={ref}
+                onChangeText={setRef}
+                autoCapitalize='none'
             />
             {isLoading && <ActivityIndicator />}
             {data?.status !== "OK" && <Text>Order not found</Text>}
@@ -22,6 +21,7 @@ const TrackOrder = () => {
             )}
         </View>
     )
+
 }
 
 const styles = StyleSheet.create({

@@ -2,7 +2,7 @@ import { Text, FlatList, View, StyleSheet, Pressable, Alert, ActivityIndicator }
 import { useSelector, useDispatch } from 'react-redux';
 import CartListItem from '../components/CartListItem';
 import { selectDeliveryPrice, selectSubtotal, selectTotal, cartSlice } from '../store/cartSlice';
-import { useCreateOrderMutation } from '../store/apiSlice';
+import { useCreateOrderMutation, useCreatePaymentIntentMutation } from '../store/apiSlice';
 import { useStripe } from '@stripe/stripe-react-native';
 // import cart from "../data/cart";
 
@@ -41,6 +41,47 @@ const ShoppingCartScreen =  ()  => {
 
     const [createOrder, { data, error, isLoading }] = useCreateOrderMutation();
 
+    const [createPaymentIntent] = useCreatePaymentIntentMutation();
+
+    const { initPaymentSheet, presentPaymentSheet } = useStripe();
+
+    const onCheckout = async () => {
+        // create a payment intent
+        const response = await createPaymentIntent({
+            amount: Math.floor(total * 100),
+        })
+        // console.log("RESPONSE: ", response);
+        if(response.error){
+            // console.log("response error: ", response.error);
+            Alert.alert("Something went wrong");
+            return;
+        }
+        // initialize the payment sheet
+        const initResponse = await initPaymentSheet({
+            merchantDisplayName: "sphcastillo",
+            paymentIntentClientSecret: response.data.paymentIntent,
+        })
+        if(initResponse.error){
+            // console.log("init Response: ", initResponse.error);
+            Alert.alert("Something went wrong");
+            return;
+        }
+
+        // present the payment sheet from Stripe
+        const paymentResponse = await presentPaymentSheet();
+
+        if(paymentResponse.error){
+            Alert.alert(
+                `Error code: ${paymentResponse.error.code}`,
+                paymentResponse.error.message
+            );
+            return;
+        }
+
+        // if payment is ok => create the order
+        onCreateOrder();
+    }
+
     const onCreateOrder = async () => {
         const result =  await createOrder({
             // all the items from the cart - we want to add to order
@@ -73,7 +114,7 @@ const ShoppingCartScreen =  ()  => {
                 ListFooterComponent={ShoppingCartTotals}
             />
             <Pressable 
-                onPress={onCreateOrder} 
+                onPress={onCheckout} 
                 style={styles.button}
             >
                 <Text style={styles.buttonText}>

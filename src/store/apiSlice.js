@@ -18,7 +18,7 @@ export const apiSlice = createApi({
     }),
     //mutation is for POST request - to update some data
     createOrder: builder.mutation({
-      // newOrder - receiving as a parameter from our shoppingCart component
+      // newOrder - receiving as a parameter from our shoppingCartScreen component
       query: (newOrder) => ({
         url: 'orders',
         method: "POST",
@@ -26,16 +26,25 @@ export const apiSlice = createApi({
       })
     }),
     getOrder: builder.query({
-      query: (ref)  => `orders/${ref}`,
+      query: (ref) => `orders/${ref}`,
+    }),
+    // Payments - POST request
+    createPaymentIntent: builder.mutation({
+      query: (data) => ({
+        url: 'payments/intents',
+        method: 'POST',
+        body: data,
+      }), 
     })
   }),
 });
 
-// Export hooks for usuage in functional components, which are
-// auto-generared nased on the defined endpoints
+// Export hooks for usage in functional components, which are
+// auto-generared based on the defined endpoints
 export const { 
   useGetProductQuery, 
   useGetProductsQuery,
   useCreateOrderMutation,
-  useGetOrderQuery
+  useGetOrderQuery,
+  useCreatePaymentIntentMutation
 } = apiSlice;
